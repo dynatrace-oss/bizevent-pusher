@@ -13,6 +13,8 @@ A tool to assist pushing Business Events (aka bizevents) to the Dynatrace platfo
 7. Click **Generate new client**
 8. Make a note of the 3 values provided (client ID, client secret and URN). These are sensitive. Do not store in Git.
 
+![DT OAuth Client](assets/prereq1.jpg)
+
 ## Use It
 
 - Tenant must be WITHOUT trailing slash.
@@ -37,3 +39,13 @@ Bizevent successfully sent!
 
 ## Retrieving Business Events
 In the platform, run `fetch bizevents`.
+
+## Clod and Build
+
+Optional, but if you want to clone this repo and build a custom version:
+
+```
+git clone https://github.com/agardnerit/bizeventpusher.git
+cd bizeventpusher
+docker build -t YOU/bizeventpusher:0.1.1 code/.
+```
