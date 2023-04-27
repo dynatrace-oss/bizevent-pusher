@@ -23,7 +23,7 @@ A tool to assist pushing Business Events (aka bizevents) to the Dynatrace platfo
 - `-urn` = URN generated above
 
 ```
-docker run \
+docker run --rm gardnera/bizeventpusher:0.1.0 \
 -ten https://abc12345.live.dynatrace.com \
 -ocid dt0s02.***** \
 -ocs dt0s02.*****.**************** \
