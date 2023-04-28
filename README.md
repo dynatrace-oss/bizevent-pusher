@@ -45,16 +45,56 @@ This container can be used as part of a GitHub Action workflow. For example, to 
 
 Of course, first you need to create GitHub Action secrets to hold your details.
 
+- `secrets.DT_TENANT_URL` like `https://abc12345.live.dynatrace.com` (no trailing slash)
+- `secrets.DT_OAUTH_CLIENT_ID` like `dt0s02.*****`
+- `secrets.DT_OAUTH_CLIENT_SECRET` like `dt0s02.****.*******`
+- `secrets.DT_ACCOUNT_URN` like `urn:dtaccount:********`
+
 ```
-TODO...
+name: send-biz-events
+run-name: send-biz-events
+on:
+  issues:
+    types: [opened, edited, closed]
+  pull_request:
+    types: [opened, edited, closed]
+jobs:
+  issue-push:
+    # Only run if the trigger is an action on an issue.
+    if: github.event_name == 'issues'
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: "Push Issue Bizevent"
+        run: |
+          docker run --rm gardnera/bizeventpusher:0.1.0 \
+          -ten ${{ secrets.DT_TENANT_URL }} \
+          -ocid ${{ secrets.DT_OAUTH_CLIENT_ID }} \
+          -ocs ${{ secrets.DT_OAUTH_CLIENT_SECRET }} \
+          -urn ${{ secrets.DT_ACCOUNT_URN }} \
+          -p '{"type": "${{ github.event_name }}.${{ github.event.action }}", "source": "gha", "data": { "id": "${{ github.event.issue.number }}", "title": "${{ github.event.issue.title }}", "link": "${{ github.event.issue.html_url }}" } }'
+
+  pull-request-push:
+    # Only run if the trigger is an action on a pull request.
+    if: github.event_name == 'pull_request'
+    runs-on: "ubuntu-latest"
+    steps:
+        - name: "Push PR Bizevent"
+          run: |
+            docker run --rm gardnera/bizeventpusher:0.1.0 \
+            -ten ${{ secrets.DT_TENANT_URL }} \
+            -ocid ${{ secrets.DT_OAUTH_CLIENT_ID }} \
+            -ocs ${{ secrets.DT_OAUTH_CLIENT_SECRET }} \
+            -urn ${{ secrets.DT_ACCOUNT_URN }} \
+            -p '{"type": "${{ github.event_name }}.${{ github.event.action }}", "source": "gha", "data": { "id": "${{ github.event.pull_request.number }}", "title": "${{ github.event.pull_request.title }}", "link": "${{ github.event.pull_request.html_url }}" } }'
 ```
 
+### Fetching Issues
 Then:
 
 ```
 fetch bizevents
 | filter isNotNull(type)
-| filter type == "issues.edited"
+| filter type == "[issues|pull_request].[opened|edited|closed]"
 ```
 
 ## Clone and Build
