@@ -63,6 +63,8 @@ jobs:
     runs-on: "ubuntu-latest"
     steps:
       - name: "Push Bizevent"
+        env:
+          TRIGGER: ${{ (github.event_name == 'issues') && 'issue' || 'pull_request' }}
         run: |
           URL=$(jq -r '${{ format('.event.{0}.html_url', env.TRIGGER) }}' <<< '${{ toJSON(github) }}')
           docker run --rm gardnera/bizeventpusher:0.1.0 \
