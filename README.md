@@ -64,28 +64,15 @@ jobs:
     if: github.event_name == 'issues'
     runs-on: "ubuntu-latest"
     steps:
-      - name: "Push Issue Bizevent"
+      - name: "Push Bizevent"
         run: |
+          URL=$(jq -r '${{ format('.event.{0}.html_url', env.TRIGGER) }}' <<< '${{ toJSON(github) }}')
           docker run --rm gardnera/bizeventpusher:0.1.0 \
           -ten ${{ secrets.DT_TENANT_URL }} \
           -ocid ${{ secrets.DT_OAUTH_CLIENT_ID }} \
           -ocs ${{ secrets.DT_OAUTH_CLIENT_SECRET }} \
           -urn ${{ secrets.DT_ACCOUNT_URN }} \
-          -p '{"type": "${{ github.event_name }}.${{ github.event.action }}", "source": "gha", "data": { "id": "${{ github.event.issue.number }}", "title": "${{ github.event.issue.title }}", "link": "${{ github.event.issue.html_url }}" } }'
-
-  pull-request-push:
-    # Only run if the trigger is an action on a pull request.
-    if: github.event_name == 'pull_request'
-    runs-on: "ubuntu-latest"
-    steps:
-        - name: "Push PR Bizevent"
-          run: |
-            docker run --rm gardnera/bizeventpusher:0.1.0 \
-            -ten ${{ secrets.DT_TENANT_URL }} \
-            -ocid ${{ secrets.DT_OAUTH_CLIENT_ID }} \
-            -ocs ${{ secrets.DT_OAUTH_CLIENT_SECRET }} \
-            -urn ${{ secrets.DT_ACCOUNT_URN }} \
-            -p '{"type": "${{ github.event_name }}.${{ github.event.action }}", "source": "gha", "data": { "id": "${{ github.event.pull_request.number }}", "title": "${{ github.event.pull_request.title }}", "link": "${{ github.event.pull_request.html_url }}" } }'
+          -p '{"type": "${{ github.event_name }}.${{ github.event.action }}", "source": "gha", "data": { "id": "${{ github.event.issue.number }}", "title": "${{ github.event.issue.title }}", "link": "$URL" } }'
 ```
 
 ### Fetching Issues
