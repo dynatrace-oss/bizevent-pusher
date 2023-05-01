@@ -70,7 +70,7 @@ jobs:
           -ocid ${{ secrets.DT_OAUTH_CLIENT_ID }} \
           -ocs ${{ secrets.DT_OAUTH_CLIENT_SECRET }} \
           -urn ${{ secrets.DT_ACCOUNT_URN }} \
-          -p '{"type": "${{ github.event_name }}.${{ github.event.action }}", "source": "gha", "data": { "id": "${{ github.event.issue.number }}", "title": "${{ github.event.issue.title }}", "link": "$URL" } }'
+          -p "{\"type\": \"${{ github.event_name }}.${{ github.event.action }}\", \"source\": \"githubactions\", \"data\": { \"id\": \"${{ github.event.issue.number }}\", \"title\": \"${{ github.event.issue.title }}\", \"link\": \"$URL\" } }"
 ```
 
 ### Fetching Issues
