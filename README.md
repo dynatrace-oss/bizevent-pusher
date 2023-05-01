@@ -59,9 +59,7 @@ on:
   pull_request:
     types: [opened, edited, closed]
 jobs:
-  issue-push:
-    # Only run if the trigger is an action on an issue.
-    if: github.event_name == 'issues'
+  bizevent-push:
     runs-on: "ubuntu-latest"
     steps:
       - name: "Push Bizevent"
