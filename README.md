@@ -37,10 +37,7 @@ Successful output should result in:
 Bizevent successfully sent!
 ```
 
-## Retrieving Business Events
-In the platform, run `fetch bizevents`.
-
-## Sample GitHub Action Workflow
+### Sample GitHub Action Workflow
 This container can be used as part of a GitHub Action workflow. For example, to push a bizevent anytime an issue is `opened`, `edited` or `closed`.
 
 Of course, first you need to create GitHub Action secrets to hold your details.
@@ -75,8 +72,8 @@ jobs:
           -p "{\"type\": \"${{ github.event_name }}.${{ github.event.action }}\", \"source\": \"githubactions\", \"data\": { \"id\": \"${{ github.event.issue.number }}\", \"title\": \"${{ github.event.issue.title }}\", \"link\": \"$URL\" } }"
 ```
 
-### Fetching Issues
-Then:
+## Retrieving Business Events
+In the platform, run:
 
 ```
 fetch bizevents
