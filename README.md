@@ -23,7 +23,7 @@ A tool to assist pushing Business Events (aka bizevents) to the Dynatrace platfo
 - `-urn` = URN generated above
 
 ```
-docker run --rm gardnera/bizeventpusher:0.1.0 \
+docker run --rm ghcr.io/dynatrace-oss/bizevent-pusher:v0.0.1 \
 -ten https://abc12345.live.dynatrace.com \
 -ocid dt0s02.***** \
 -ocs dt0s02.*****.**************** \
@@ -86,7 +86,7 @@ fetch bizevents
 Optional, but if you want to clone this repo and build a custom version:
 
 ```
-git clone https://github.com/agardnerit/bizeventpusher.git
-cd bizeventpusher
-docker build -t YOU/bizeventpusher:0.1.1 code/.
+git clone https://github.com/dynatrace-oss/bizevent-pusher.git
+cd bizevent-pusher
+docker build -t YOU/bizevent-pusher:0.1.1 code/.
 ```
