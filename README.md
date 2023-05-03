@@ -2,6 +2,10 @@
 
 A tool to assist pushing Business Events (aka bizevents) to the Dynatrace platform.
 
+## New To Business Events?
+
+[Watch Andi and Klaus's business event session on YouTube](https://www.youtube.com/watch?v=KuG3PniOaQs)
+
 ## Prereq: Create OAuth Client
 
 1. Go to the [Dynatrace account management API page](https://account.dynatrace.com/my/enterprise-api)
