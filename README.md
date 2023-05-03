@@ -23,12 +23,12 @@ A tool to assist pushing Business Events (aka bizevents) to the Dynatrace platfo
 - `-urn` = URN generated above
 
 ```
-docker run --rm ghcr.io/dynatrace-oss/bizevent-pusher:v0.0.1 \
+docker run --rm ghcr.io/dynatrace-oss/bizevent-pusher:v1.0.0 \
 -ten https://abc12345.live.dynatrace.com \
 -ocid dt0s02.***** \
 -ocs dt0s02.*****.**************** \
 -urn urn:dtaccount:******** \
--p '{"foo": "bar"}'
+-p "{\"foo\": \"bar\"}"
 ```
 
 Successful output should result in:
