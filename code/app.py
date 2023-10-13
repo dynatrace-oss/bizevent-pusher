@@ -30,7 +30,7 @@ parser = argparse.ArgumentParser()
 # oauth_client_secret = "dt0s02.*****.*****"
 # This is sensitive! Store securely. DO NOT COMMIT TO GIT!
 # account_urn = "urn:dtaccount:*******"
-# permissions = "storage:events:write"
+# permissions = "storage:bizevents:read storage:buckets:read storage:events:write"
 
 # The following won't (often) change (if at all)
 OAUTH_DEV_ENDPOINT = "https://sso-dev.dynatracelabs.com/sso/oauth2/token"
@@ -38,7 +38,7 @@ OAUTH_SPRINT_ENDPOINT = "https://sso-sprint.dynatracelabs.com/sso/oauth2/token"
 OAUTH_PROD_ENDPOINT = "https://sso.dynatrace.com/sso/oauth2/token"
 # default to "prod"
 oauth_endpoint =  OAUTH_PROD_ENDPOINT
-permissions = "storage:events:write"
+permissions = "storage:bizevents:read storage:buckets:read storage:events:write"
 
 # Add arguments to script that user must pass
 parser.add_argument('-ten', '--tenant', required=True)
