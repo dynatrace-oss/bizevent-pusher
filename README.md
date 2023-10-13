@@ -18,7 +18,7 @@ Follow [the documentation here](https://www.dynatrace.com/support/help/platform-
 - `-urn` = URN generated above
 
 ```
-docker run --rm ghcr.io/dynatrace-oss/bizevent-pusher:v1.0.0 \
+docker run --rm ghcr.io/dynatrace-oss/bizevent-pusher:v1.1.0 \
 -ten https://abc12345.live.dynatrace.com \
 -ocid dt0s02.***** \
 -ocs dt0s02.*****.**************** \
@@ -59,7 +59,7 @@ jobs:
           TRIGGER: ${{ (github.event_name == 'issues') && 'issue' || 'pull_request' }}
         run: |
           URL=$(jq -r '${{ format('.event.{0}.html_url', env.TRIGGER) }}' <<< '${{ toJSON(github) }}')
-          docker run --rm ghcr.io/dynatrace-oss/bizevent-pusher:v1.0.0 \
+          docker run --rm ghcr.io/dynatrace-oss/bizevent-pusher:v1.1.0 \
           -ten ${{ secrets.DT_TENANT_URL }} \
           -ocid ${{ secrets.DT_OAUTH_CLIENT_ID }} \
           -ocs ${{ secrets.DT_OAUTH_CLIENT_SECRET }} \
