@@ -8,16 +8,7 @@ A tool to assist pushing Business Events (aka bizevents) to the Dynatrace platfo
 
 ## Prereq: Create OAuth Client
 
-1. Go to the [Dynatrace account management API page](https://account.dynatrace.com/my/enterprise-api)
-2. Click "Create New Client"
-3. Provide a descriptive name and use your email as the service user ID
-4. Uncheck all **Account** permissions
-5. Switch to **Grail data ingest** tab and check **Write/edit events (storage:events:write)**
-6. Double check that the **only** box you have checked in the **storage:events:write** box
-7. Click **Generate new client**
-8. Make a note of the 3 values provided (client ID, client secret and URN). These are sensitive. Do not store in Git.
-
-![DT OAuth Client](assets/prereq1.jpg)
+Follow [the documentation here](https://www.dynatrace.com/support/help/platform-modules/business-analytics/ba-api-ingest) to set up an OAuth client + policy + bind to your service user account email.
 
 ## Use It
 
