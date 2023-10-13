@@ -18,7 +18,7 @@ Follow [the documentation here](https://www.dynatrace.com/support/help/platform-
 - `-urn` = URN generated above
 
 ```
-docker run --rm ghcr.io/dynatrace-oss/bizevent-pusher:v1.1.0 \
+docker run --rm ghcr.io/dynatrace-oss/bizevent-pusher:v1.1.1 \
 -ten https://abc12345.live.dynatrace.com \
 -ocid dt0s02.***** \
 -ocs dt0s02.*****.**************** \
@@ -59,7 +59,7 @@ jobs:
           TRIGGER: ${{ (github.event_name == 'issues') && 'issue' || 'pull_request' }}
         run: |
           URL=$(jq -r '${{ format('.event.{0}.html_url', env.TRIGGER) }}' <<< '${{ toJSON(github) }}')
-          docker run --rm ghcr.io/dynatrace-oss/bizevent-pusher:v1.1.0 \
+          docker run --rm ghcr.io/dynatrace-oss/bizevent-pusher:v1.1.1 \
           -ten ${{ secrets.DT_TENANT_URL }} \
           -ocid ${{ secrets.DT_OAUTH_CLIENT_ID }} \
           -ocs ${{ secrets.DT_OAUTH_CLIENT_SECRET }} \
@@ -83,5 +83,5 @@ Optional, but if you want to clone this repo and build a custom version:
 ```
 git clone https://github.com/dynatrace-oss/bizevent-pusher.git
 cd bizevent-pusher
-docker build -t YOU/bizevent-pusher:1.0.1 code/.
+docker build -t YOU/bizevent-pusher:dev code/.
 ```
