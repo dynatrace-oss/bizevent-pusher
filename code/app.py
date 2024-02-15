@@ -57,6 +57,9 @@ account_urn = args.account_urn
 payload = json.loads(args.payload)
 debug_mode = args.debug
 
+# Strip potential trailing slash in case user left it in
+tenant_url = tenant_url.strip("/")
+
 # Use incoming tenant_url to set the biz event ingest URL
 biz_event_url = f"{tenant_url}/api/v2/bizevents/ingest"
 
@@ -112,7 +115,8 @@ access_token_value = access_token_json['access_token']
 ################################################
 biz_event_url = f"{tenant_url}/api/v2/bizevents/ingest"
 biz_event_headers = {
-    "Authorization": f"Bearer {access_token_value}"
+    "Authorization": f"Bearer {access_token_value}",
+    "Content-Type": "application/json"
 }
 
 biz_event_resp = requests.post(
