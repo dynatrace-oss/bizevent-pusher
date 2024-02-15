@@ -4,7 +4,7 @@ import argparse
 import json
 
 #############################################################################
-# USAGE TODO
+# USAGE
 # python app.py \
 # -ten=https://abc12345.live.dynatrace.com \
 # -ocid=dt0s02.**** \
@@ -60,8 +60,11 @@ debug_mode = args.debug
 # Strip potential trailing slash in case user left it in
 tenant_url = tenant_url.strip("/")
 
-# Use incoming tenant_url to set the biz event ingest URL
-biz_event_url = f"{tenant_url}/api/v2/bizevents/ingest"
+# Set up debug mode and dry run switches
+DEBUG_MODE = False
+if debug_mode.lower() == "true":
+   print("> Debug mode is ON")
+   DEBUG_MODE = True
 
 # Change OAuth endpoint based on environment
 # Currently supports "dev", "sprint" or "prod" (default)
@@ -70,11 +73,17 @@ if ".dev." in tenant_url.lower():
 if ".sprint." in tenant_url.lower():
     oauth_endpoint = OAUTH_SPRINT_ENDPOINT
 
-# Set up debug mode and dry run switches
-DEBUG_MODE = False
-if debug_mode.lower() == "true":
-   print("> Debug mode is ON")
-   DEBUG_MODE = True
+# Use incoming tenant_url to set the biz event ingest URL
+biz_event_url = ""
+
+if ".apps." in tenant_url:
+    # Using the new DT platform
+    # Set the bizevent ingest endpoint appropriately
+    biz_event_url = f"{tenant_url}/platform/classic/environment-api/v2/bizevents/ingest"
+    if DEBUG_MODE:
+        print(f"Got a gen3 endpoint. biz_event_url is: {biz_event_url}")
+else:
+    biz_event_url = f"{tenant_url}/api/v2/bizevents/ingest"
 
 # Set up the OAuth body payload
 oauth_body = {
@@ -113,7 +122,6 @@ access_token_value = access_token_json['access_token']
 ################################################
 # Step 2: Use Access Token to push bizevent
 ################################################
-biz_event_url = f"{tenant_url}/api/v2/bizevents/ingest"
 biz_event_headers = {
     "Authorization": f"Bearer {access_token_value}",
     "Content-Type": "application/json"
@@ -128,6 +136,7 @@ biz_event_resp = requests.post(
 if biz_event_resp.status_code == 202:
     print("Bizevent successfully sent!")
 else:
+    print(f"Response Status Code: {biz_event_resp.status_code}")
     print(f"{biz_event_resp.json()}")
     print(f"Error sending bizevent. Please investigate. Exiting.")
     exit(1)
